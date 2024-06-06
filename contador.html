@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contador de Energía</title>
+</head>
+<body>
+    <h1>Contador de Energía</h1>
+    <h2>Datos del Sensor:</h2>
+    <p>Corriente: <span id="corriente"></span> A</p>
+    <p>Voltaje: <span id="voltaje"></span> V</p>
+    <p>Potencia: <span id="potencia"></span> W</p>
+    <p>Frecuencia: <span id="frecuencia"></span> Hz</p>
+    <p>Factor de Potencia: <span id="factor_potencia"></span></p>
+    <h2>Datos del Consumo:</h2>
+    <p>Consumo Total: <span id="consumo_total"></span> kWh</p>
+    <p>Costo Actual: <span id="costo_actual"></span> COP</p>
+
+    <script>
+        function updateData() {
+            fetch('/sensor')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('corriente').innerText = data['corriente'] + ' A';
+                    document.getElementById('voltaje').innerText = data['voltaje'] + ' V';
+                    document.getElementById('potencia').innerText = data['potencia'] + ' W';
+                    document.getElementById('frecuencia').innerText = data['frecuencia'] + ' Hz';
+                    document.getElementById('factor_potencia').innerText = data['factor_potencia'];
+                    document.getElementById('consumo_total').innerText = data['consumo_total'] + ' kWh';
+                    document.getElementById('costo_actual').innerText = data['costo_actual'] + ' COP';
+                });
+        }
+
+        // Actualiza los datos cada segundo
+        setInterval(updateData, 1000);
+    </script>
+</body>
+</html>
